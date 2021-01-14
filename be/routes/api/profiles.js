@@ -1,7 +1,7 @@
-let mongoose = require('mongoose');
-let router = require('express').Router();
-let User = mongoose.model('User');
-let auth = require('../auth');
+const mongoose = require('mongoose');
+const router = require('express').Router();
+const User = mongoose.model('User');
+const auth = require('../auth');
 
 router.param('username', (req, res, next, username) => {
     User.findOne({username: username}).then(user => {
@@ -13,7 +13,7 @@ router.param('username', (req, res, next, username) => {
     }).catch(next);
 });
 
-router.get('/:username', auth.optional, (req, res, next) => {
+router.get('/:username', auth.optional, (req, res) => {
     if (req.payload) {
         User.findById(req.payload.id).then(user => {
             console.info('payload.id', req.payload.id);
